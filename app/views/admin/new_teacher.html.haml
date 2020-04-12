@@ -1,0 +1,27 @@
+%h3 Create Teacher
+
+= form_for @user, url: create_teacher_admin_index_path, method: :post, :html=>{:id=>'new_teacher'} do |f|
+  .col-md-6.col-sm-6.col-xs-12
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Email
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.text_field :email, autofocus: true, placeholder: 'Email', :class =>'form-control col-md-7 col-xs-12'
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Name
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.text_field :name, autofocus: true, placeholder: 'Name', :class =>'form-control col-md-7 col-xs-12'
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Number
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.text_field :number, autofocus: true, placeholder: 'Number', :class =>'form-control col-md-7 col-xs-12'
+    .form-group
+      .col-md-6.col-md-offset-5
+        = link_to 'Cancel', teacher_admin_index_path, class: 'btn btn-default'
+        = f.submit 'Create', :class =>'btn btn-primary add-button'
+

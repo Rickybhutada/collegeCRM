@@ -1,0 +1,34 @@
+%h2  Teacher
+
+= link_to("Create class for the subject", new_class_for_subject_path)
+%table#teacher-table.table.table-hover.table.table-striped.table-bordered{:style=>"width:100%"}
+  %thead
+    %tr
+      %th Course Type
+      %th Course
+      %th Subject
+      %th Timing
+  %tbody
+    - @classes.each do |subject|
+      %tr
+        %td
+          = get_course_type(subject.course_type_id)
+        %td
+          = get_course(subject.course_id)
+        %td
+          = get_subject(subject.subject_id)
+        %td
+          = subject.start_datetime
+
+:javascript
+  $('#teacher-table').DataTable({
+    oLanguage: {
+      sEmptyTable: 'Classes Not Available'
+    },
+    "bSort": false,
+    oSearch: {
+      "bSmart": false,
+      "bRegex": true
+    }
+  });
+

@@ -1,0 +1,40 @@
+%h1 You are loged in as
+%p
+  = @student.email
+
+%table#student-table.table.table-hover.table.table-striped.table-bordered{:style=>"width:100%"}
+  %thead
+    %tr
+      %th Teacher Name
+      %th Course
+      %th Subject
+      %th Class Time
+      %th Attend Class
+  %tbody
+    - @today_classes.each do |today_class|
+      %tr
+        %td
+          = get_teacher_name(today_class.user_id)
+        %td
+          = get_course_name(today_class.course_id)
+        %td
+          = get_subject_name(today_class.subject_id)
+        %td
+          = today_class.start_datetime
+        %td
+          .attend-class.btn.btn-info.disabled.margin-right{subject_id:today_class.subject_id, teacher_id:today_class.user_id}
+            %i.fa.fa-envelope-o.fa-pull-right
+            Attend Class
+          -#= link_to('Attend', '#',class:'attend-class',subject_id:today_class.subject_id, teacher_id:today_class.user_id, :remote=> true )
+
+:javascript
+  $('#student-table').DataTable({
+    oLanguage: {
+      sEmptyTable: 'Classes Not Available For today'
+    },
+    "bSort": false,
+    oSearch: {
+      "bSmart": false,
+      "bRegex": true
+    }
+  });

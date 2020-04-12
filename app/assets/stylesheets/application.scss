@@ -1,0 +1,38 @@
+@import "jquery.timepicker";
+@import "bootstrap";
+@import "datatables";
+@import "bootstrap-multiselect";
+@import "admin";
+@import "teachers";
+
+
+
+
+.help-block {
+  color: red;
+  margin-bottom: 0;
+}
+
+.notice{
+  color:green;
+  text-align:center;
+}
+
+.alert{
+  color:red;
+  text-align:center;
+}
+
+.spinner {
+  transition: background 0.1s ease;
+  position: fixed;
+  z-index: 999;
+  height: 5em;
+  width: 5em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}

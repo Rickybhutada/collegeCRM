@@ -1,0 +1,29 @@
+%h1 Subject list
+= link_to("<< Back", course_admin_index_path)
+|
+= link_to('Create Subject', new_course_subject_admin_path(course_id: @course.id))
+%table#subject-table.table.table-hover.table.table-striped.table-bordered{:style=>"width:100%"}
+  %thead
+    %tr
+      %th Name
+      %th Type
+  %tbody
+    - @subjects.each do |subject|
+      %tr
+        %td
+          = subject.name
+        %td
+          = get_course(subject.course_id)
+
+:javascript
+  $('#subject-table').DataTable({
+    oLanguage: {
+      sEmptyTable: 'Subject Not Available'
+    },
+    "bSort": false,
+    oSearch: {
+      "bSmart": false,
+      "bRegex": true
+    }
+  });
+

@@ -1,0 +1,37 @@
+= javascript_include_tag "teachers"
+%h2 New Class For the Subject
+
+= form_for @teacher, url: create_class_for_subject_path, method: :post, :html=>{:id=>'new_class'} do |f|
+  .col-md-6.col-sm-6.col-xs-12
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Course Type
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        -#= f.collection_select :course_type_id, options_for_select(CourseType.all.map{|type| [type[:name], type[:id]]}), { :include_blank => 'Select Course Type'}, :class =>'form-control col-md-7 col-xs-12', autofocus: true
+        = f.collection_select :course_type_id, CourseType.order(:name),:id,:name, {include_blank: 'Select Course Type'},{class:'form-control col-md-7 col-xs-12'}
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Course
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.grouped_collection_select :course_id, CourseType.order(:name), :courses,:name,:id,:name, { include_blank: 'Select Course '}, {class:'form-control col-md-7 col-xs-12'}
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Subject
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.grouped_collection_select :subject_id, Course.order(:name), :subjects,:name,:id,:name, { include_blank: 'Select Subject '}, {class:'form-control col-md-7 col-xs-12'}
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Timing
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.text_field :start_datetime, autofocus: true, placeholder: 'Class Time', :class =>'form-control col-md-6'
+        = f.hidden_field :user_id, value: current_user.id
+        = f.hidden_field :today_classes, value:@today_classes.to_json
+        = f.hidden_field :time_now, value:@time_now
+    .form-group
+      .col-md-6.col-md-offset-5
+        = link_to 'Cancel', teacher_dashboard_path, class: 'btn btn-default'
+        = f.submit 'Create', :class =>'btn btn-primary add-button'

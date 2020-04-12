@@ -1,0 +1,10 @@
+%h1 You are logged in as #{@user.email}
+
+%h3 List of Features
+%ul
+  %li
+    = link_to('Course', course_admin_index_path)
+  %li
+    = link_to('Student', student_admin_index_path)
+  %li
+    = link_to('Teacher', teacher_admin_index_path)

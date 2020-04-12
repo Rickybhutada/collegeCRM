@@ -1,0 +1,33 @@
+%h1 Teacher list
+= link_to("<< Back", admin_index_path)
+|
+= link_to('Create Teacher', new_teacher_admin_index_path)
+%table#teacher-table.table.table-hover.table.table-striped.table-bordered{:style=>"width:100%"}
+  %thead
+    %tr
+      %th Name
+      %th Email
+      %th Number
+
+  %tbody
+    - @teachers.each do |teacher|
+      %tr
+        %td
+          = teacher.name
+        %td
+          = teacher.email
+        %td
+          = teacher.number
+
+:javascript
+  $('#teacher-table').DataTable({
+    oLanguage: {
+      sEmptyTable: 'Teacher Not Available'
+    },
+    "bSort": false,
+    oSearch: {
+      "bSmart": false,
+      "bRegex": true
+    }
+  });
+

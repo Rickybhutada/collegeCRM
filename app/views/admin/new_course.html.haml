@@ -1,0 +1,22 @@
+= javascript_include_tag "admin"
+%h3 Create Course
+
+= form_for @course, url: create_course_admin_index_path, method: :post, :html=>{:id=>'new_course'} do |f|
+  .col-md-6.col-sm-6.col-xs-12
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Name
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.text_field :name, autofocus: true, placeholder: 'Name', :class =>'form-control col-md-7 col-xs-12 reject_spaces'
+    .item.form-group.item
+      %label.control-label.col-md-2.col-sm-2.col-xs-12.label-right{:for => "name"}
+        Type
+        %span.required *
+      .col-md-8.col-sm-8.col-xs-12
+        = f.select :course_type_id, options_for_select(CourseType.all.map{|type| [type[:name], type[:id]]}), { :include_blank => 'Select Course Type'}, :class =>'form-control col-md-7 col-xs-12', autofocus: true
+    .form-group
+      .col-md-6.col-md-offset-5
+        = link_to 'Cancel', course_admin_index_path, class: 'btn btn-default'
+        = f.submit 'Create', :class =>'btn btn-primary add-button'
+
