@@ -1,6 +1,8 @@
 class TeachersController < ApplicationController
   include TeachersHelper
   before_action :check_teacher_already_completed_8_hours, only: [:create_class_for_subject]
+  before_action :track_attendence, only: [:dashboard]
+
 
   def dashboard
     @classes = get_today_classes
@@ -37,6 +39,10 @@ class TeachersController < ApplicationController
       flash[:alert] = "Your Today schedule limit is full"
       redirect_to teacher_dashboard_path
     end
+  end
+
+  def track_attendence
+    Attendance.find_or_create_by(user_id:current_user.id, date:Time.now.beginning_of_day)
   end
 
 end

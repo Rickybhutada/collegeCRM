@@ -11,10 +11,9 @@ class StudentsController < ApplicationController
     subject_id = params["subject_id"]
     subject_class = Teacher.find_by('subject_id=? AND user_id=? AND start_datetime >= ?',subject_id,teacher_id,Time.now.beginning_of_day)
     if subject_class
-      if ((Time.now <= subject_class.start_datetime.to_datetime) && (subject_class.start_datetime.to_datetime <= (Time.now+5.minutes)))
+      if ((Time.now.strftime('%a, %d %b %Y %H:%M:%S') <= subject_class.start_datetime.to_datetime) && (subject_class.start_datetime.to_datetime <= (Time.now+5.minutes).strftime('%a, %d %b %Y %H:%M:%S')))
         message = "You entered in the Class"
-        status = 1
-        track_today_attendence
+        track_attendence
       else
         message= "Sorry you only enetered in the class before the 5 minutes"
       end
@@ -28,7 +27,7 @@ class StudentsController < ApplicationController
   end
 
   private
-  def track_today_attendence
-    Attendance.find_or_create_by(user_id:current_user.id, date:Time.now)
+  def track_attendence
+    Attendance.find_or_create_by(user_id:current_user.id, date:Time.now.beginning_of_day)
   end
 end
