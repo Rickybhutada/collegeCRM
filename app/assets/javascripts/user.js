@@ -101,7 +101,7 @@ $(document).ready(function () {
             'user[course_type]':{
                 required: true
             },
-            'course[]':{
+            'user[course][]':{
                 validCourse: true
             }
         },
@@ -129,7 +129,7 @@ $(document).ready(function () {
             'user[course_type]':{
                 required: 'Please enter course type'
             },
-            'course[]':{
+            'user[course][]':{
                 validCourse: 'Please select 1 course for Full Time OR 2 course for Part Time'
             }
         },
