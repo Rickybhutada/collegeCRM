@@ -1,6 +1,7 @@
 class AdminController < ApplicationController
   include AdminHelper
   after_action -> (param = TEACHER) {create_role param}, only: :create_teacher
+  before_action :user_role_can_perform
 
   def show
   end
@@ -108,5 +109,11 @@ class AdminController < ApplicationController
 
   def add_password_field
     params[:user].merge!(:password => DEFAULT_PASSWORD)
+  end
+
+  def user_role_can_perform
+    unless is_admin?
+      restrict_user("Access Restricted")
+    end
   end
 end

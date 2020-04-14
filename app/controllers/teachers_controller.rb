@@ -2,6 +2,7 @@ class TeachersController < ApplicationController
   include TeachersHelper
   before_action :check_teacher_already_completed_8_hours, only: [:create_class_for_subject]
   before_action :track_attendence, only: [:dashboard]
+  before_action :user_role_can_perform
 
 
   def dashboard
@@ -43,6 +44,12 @@ class TeachersController < ApplicationController
 
   def track_attendence
     Attendance.find_or_create_by(user_id:current_user.id, date:Time.now.beginning_of_day)
+  end
+
+  def user_role_can_perform
+    unless is_teacher?
+      restrict_user("Access Restricted")
+    end
   end
 
 end

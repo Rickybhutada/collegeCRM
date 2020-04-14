@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper
+  before_action :authenticate_session
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   # protect_from_forgery with: :exception
@@ -26,10 +27,10 @@ class ApplicationController < ActionController::Base
   # end
 
 
-  # Check if user logged in or not
-  def authenticate_session
-    redirect_to root_path unless user_signed_in? || request.path == "/"
-  end
+  # # Check if user logged in or not
+  # def authenticate_session
+  #   redirect_to root_path unless user_signed_in? || request.path == "/"
+  # end
 
   def is_admin?
     current_user.user_role[:role_id] == ADMIN
@@ -41,6 +42,16 @@ class ApplicationController < ActionController::Base
 
   def is_teacher?
     current_user.user_role[:role_id] == TEACHER
+  end
+
+  def restrict_user(message)
+    sign_out(:user)
+    flash[:alert] = message
+    redirect_to root_path
+  end
+
+  def authenticate_session
+    redirect_to root_path, alert: "Please login First" unless user_signed_in?
   end
 
   #

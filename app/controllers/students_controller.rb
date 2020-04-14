@@ -1,5 +1,6 @@
 class StudentsController < ApplicationController
   include StudentsHelper
+  before_action :user_role_can_perform
 
   def dashboard
     @student = User.find_by_id(params[:id])
@@ -29,5 +30,11 @@ class StudentsController < ApplicationController
   private
   def track_attendence
     Attendance.find_or_create_by(user_id:current_user.id, date:Time.now.beginning_of_day)
+  end
+
+  def user_role_can_perform
+    unless is_student?
+      restrict_user("Access Restricted")
+    end
   end
 end

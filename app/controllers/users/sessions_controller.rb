@@ -1,12 +1,12 @@
 class Users::SessionsController < Devise::SessionsController
   before_filter :configure_sign_in_params, only: [:create]
-  before_action :require_no_authentication, only: [:new ]
+  skip_before_action :authenticate_session, only: [:new ]
   # before_action :authenticate_session
 
 
   # GET /resource/sign_in
   # def new
-  # end
+  # ends
 
   # POST /resource/sign_in
   # def create
@@ -28,7 +28,7 @@ class Users::SessionsController < Devise::SessionsController
   # The path used after sign up.
   def after_sign_in_path_for(resource)
     if current_user.blank?
-      restrict_user( "Login Restricted")
+      restrict_user( "Access Restricted")
     elsif is_admin?
       session[:id] = current_user.id
       admin_index_path
@@ -39,11 +39,11 @@ class Users::SessionsController < Devise::SessionsController
       session[:id] = current_user.id
       student_dashboard_path(current_user.id)
     else
-       restrict_user( "Login Restricted")
+       restrict_user( "Access Restricted")
     end
   end
 
-  def restrict_user( message)
+  def restrict_user(message)
     sign_out(resource_name)
     flash[:alert] = message
     root_path
