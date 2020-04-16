@@ -32,7 +32,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Add own gems
 # Add bootrsap
-gem 'bootstrap', '~> 4.0.0'
+gem 'bootstrap', '~> 4.4.1'
 
 # Add mysql gem
 gem 'mysql2', '~> 0.4.0'
